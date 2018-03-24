@@ -14,7 +14,7 @@
                   ?>
 
               </div>
-              <div class="large">Registered Events</div>
+              <div class="large"><a href="registered_events.php">Registered Events</a></div>
             </div>
           </div>
         </div>
@@ -22,7 +22,7 @@
           <div class="panel panel-orange panel-widget border-right">
             <div class="row no-padding"><em class="fa fa-xl fa-users color-teal"></em>
               <div class="large">4</div>
-              <div class="large">Upcoming Events</div>
+              <div class="large"><a href="upcoming_events.php">Upcoming Events</div>
             </div>
           </div>
         </div>
@@ -40,7 +40,7 @@
                   ?>
 
               </div>
-              <div class="large">Past Events</div>
+              <div class="large"><a href="past_events.php">Past Events</a></div>
             </div>
           </div>
         </div>
