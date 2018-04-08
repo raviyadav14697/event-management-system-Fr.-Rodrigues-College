@@ -1,3 +1,7 @@
+<?php
+	session_start();
+
+?>
 
 <!DOCTYPE html>
 <html>
@@ -9,10 +13,11 @@
 	<link href="css/font-awesome.min.css" rel="stylesheet">
 	<link href="css/datepicker3.css" rel="stylesheet">
 	<link href="css/styles.css" rel="stylesheet">
-	<link href="css/sb-admin.css" rel="stylesheet">
+	
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
-  	
+  	<link rel="stylesheet" type="text/css" href="css/common.css">
+
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/council_index.js"></script>
 
@@ -21,7 +26,11 @@
 	<!--[if lt IE 9]>
 	<script src="js/html5shiv.js"></script>
 	<script src="js/respond.min.js"></script>
-	<![endif]-->
+	<![endif]--> <script type = "text/javascript" src = "https://www.gstatic.com/charts/loader.js">
+      </script>
+      <script type = "text/javascript">
+         google.charts.load('current', {packages: ['corechart']});     
+      </script>
 </head>
 <body>
 	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
@@ -31,7 +40,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
-				<a class="navbar-brand" href="#"><span>Lumino</span>Admin</a>
+				<a class="navbar-brand" href="#"><span>Event Management</span> System</a>
 				<ul class="nav navbar-top-links navbar-right">
 					<li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
 						<em class="fa fa-envelope"></em><span class="label label-danger">15</span>
@@ -94,7 +103,7 @@
 				<img src="http://placehold.it/50/30a5ff/fff" class="img-responsive" alt="">
 			</div>
 			<div class="profile-usertitle">
-				<div class="profile-usertitle-name">Username</div>
+				<div class="profile-usertitle-name"><?php echo $_SESSION['email']; ?></div>
 				<div class="profile-usertitle-status"><span class="indicator label-success"></span>Online</div>
 			</div>
 			<div class="clear"></div>
@@ -130,7 +139,8 @@
 				-->
 			<li class="active"><a id="student_events" onclick="load(this.id)"><em class="fa fa-calendar">&nbsp;</em> Events </a></li>
 			<li><a id="placements" onclick="load(this.id)"  ><em class="fa fa-calendar">&nbsp;</em> Placements</a></li>
-			<li><a id="update_profile" onclick="load(this.id)"  ><em class="fa fa-calendar">&nbsp;</em> Update Profile</a></li>
+			<li><a id="update_profile" href="spectrumcomplete/student_profile.php"  ><em class="fa fa-calendar">&nbsp;</em> Update Profile</a></li>
+			
 			<li><a  href="logout.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 		</ul>
 	</div><!--/.sidebar-->
@@ -147,14 +157,14 @@
 		
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Dashboard</h1>
+				<h1 class="page-header">Student Dashboard</h1>
 			</div>
 		</div><!--/.row-->
 
 
 		<div id="add_here">
 				<?php require 'student_events.php'; ?>
-		</div>	
+
 			
 
 		
@@ -516,7 +526,7 @@
 
 	-->
 	</div>		
-	<script src="js/jquery-1.11.1.min.js"></script>
+	
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/chart.min.js"></script>
 	<script src="js/chart-data.js"></script>
@@ -524,17 +534,7 @@
 	<script src="js/easypiechart-data.js"></script>
 	<script src="js/bootstrap-datepicker.js"></script>
 	<script src="js/custom.js"></script>
-	<script>
-		window.onload = function () {
-	var chart1 = document.getElementById("line-chart").getContext("2d");
-	window.myLine = new Chart(chart1).Line(lineChartData, {
-	responsive: true,
-	scaleLineColor: "rgba(0,0,0,.2)",
-	scaleGridLineColor: "rgba(0,0,0,.05)",
-	scaleFontColor: "#c5c7cc"
-	});
-};
-	</script>
+	
 		
 </body>
 </html>

@@ -1,0 +1,23 @@
+#hide_it{
+			visibility: hidden;
+			height: 0px;
+			width: 0px;
+		}
+
+		.glys
+		{
+			font-size: 40px;
+		}
+		.text{
+			color: green;
+			line-height: 0px;
+			font-size: 30px;
+		}
+
+		.text1{
+			color : blue;
+		}
+
+		.text2{
+			color : red;
+		}

@@ -1,4 +1,20 @@
-<?php require 'db.php'; ?>
+<?php
+session_start();
+
+include('db.php');
+
+
+
+$id='rahul';
+$query="select * from source where fullname='$id'" ;
+$selectimage =mysqli_fetch_object(mysqli_query($con,$query));
+$image_name=$selectimage->imagename;
+
+$_SESSION["earlierimagename"] =$image_name;
+
+
+?>
+
 
 <!DOCTYPE html>
 <html>
@@ -10,13 +26,9 @@
 	<link href="css/font-awesome.min.css" rel="stylesheet">
 	<link href="css/datepicker3.css" rel="stylesheet">
 	<link href="css/styles.css" rel="stylesheet">
-	<link href="css/sb-admin.css" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <!--Import materialize.css-->
-  	
+	
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/council_index.js"></script>
-
 	<!--Custom Font-->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 	<!--[if lt IE 9]>
@@ -32,7 +44,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
-				<a class="navbar-brand" href="#"><span>Lumino</span>Admin</a>
+				<a class="navbar-brand" href="#"><span>Event Management </span>System</a>
 				<ul class="nav navbar-top-links navbar-right">
 					<li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
 						<em class="fa fa-envelope"></em><span class="label label-danger">15</span>
@@ -95,17 +107,13 @@
 				<img src="http://placehold.it/50/30a5ff/fff" class="img-responsive" alt="">
 			</div>
 			<div class="profile-usertitle">
-				<div class="profile-usertitle-name">Username</div>
+				<div class="profile-usertitle-name"><?php echo $_SESSION['email']; ?></div>
 				<div class="profile-usertitle-status"><span class="indicator label-success"></span>Online</div>
 			</div>
 			<div class="clear"></div>
 		</div>
 		<div class="divider"></div>
-		<form role="search">
-			<div class="form-group">
-				<input type="text" class="form-control" placeholder="Search">
-			</div>
-		</form>
+		
 		<ul class="nav menu">
 			<!--
 			<li class="active"><a href="index.html"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
@@ -129,10 +137,10 @@
 				</ul>
 			</li>
 				-->
-			<li class="active"><a id="events" onclick="load(this.id)"><em class="fa fa-calendar">&nbsp;</em> Events History</a></li>
-			<li><a id="confirmed_events" onclick="load(this.id)"  ><em class="fa fa-calendar">&nbsp;</em> Confirmed Events</a></li>
-			<li><a id="pending_events" onclick="load(this.id)"  ><em class="fa fa-calendar">&nbsp;</em> Pending Events</a></li>
-			<li><a  href="logout.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+			<li ><a id="../student_events" onclick="load(this.id)"><em class="fa fa-calendar">&nbsp;</em> Events </a></li>
+			<li><a id="../placements" onclick="load(this.id)"  ><em class="fa fa-calendar">&nbsp;</em> Placements</a></li>
+			<li class="active"><a id="student_profile" onclick="load(this.id)"  ><em class="fa fa-calendar">&nbsp;</em> Update Profile</a></li>
+			<li><a  href="../logout.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 		</ul>
 	</div><!--/.sidebar-->
 		
@@ -146,15 +154,162 @@
 			</ol>
 		</div><!--/.row-->
 		
-		<div class="row">
-			<div class="col-lg-12">
-				<h1 class="page-header">Dashboard</h1>
-			</div>
-		</div><!--/.row-->
-
-
+	<div class="row" style="margin-top:40px">
 		<div id="add_here">
-				<?php require 'event-history.php'; ?>
+		
+		
+		<div id="div_sec"> 
+			<!-- Option to upload & edit 
+			<div class="container-fluid">
+				<div id="hof">
+					<a href="hof.php"><button type="button" class="btn btn-default btn-lg">Upload</button></a>
+					<a href="edittingfinal.php"><button type="button" class="btn btn-danger btn-lg">Edit</button></a>	
+				</div>
+			</div>
+			
+			-->
+
+			<div>
+				<a class="btn btn-primary " href="../ResumeParser/resumeparser.php">Update Professional Details</a>
+			</div>
+			
+			
+			
+			
+			<?php
+		
+		     $id='rahul';
+
+
+		  	
+		     $query =mysqli_query($con,"SELECT * from source WHERE fullname='$id' ") ;
+			 
+			
+			while( $row=mysqli_fetch_object($query))
+			{
+				
+        ?>	
+			
+			
+			
+			
+			<div class="container-fluid">	
+				<h2>Enter Student Credentials</h2>
+				<form class="form-horizontal" role="form" method="post" action="particularedit.php" enctype="multipart/form-data" >
+					<div class="form-group">
+						<label class="control-label col-sm-2">Image:</label>
+						
+						
+						<div class="col-sm-5">
+							<img src="<?php echo $row->imagepath ?>" width="150px" height="150px">
+						</div>
+						<div class="col-sm-5">
+							<input type="file" class="form-control" name="file" ></input>
+						</div>
+					</div>
+					
+					
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2">Name:</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control" id="name" value="<?php echo $row->fullname?>" disabled></input>
+						</div>
+						
+						
+						<?php
+						
+						      $_SESSION["earlierfullname"]=$row->fullname;
+						
+						
+						?>
+						
+						
+						
+						
+						
+						<div class="col-sm-5">
+							<input type="text" class="form-control" id="name" placeholder="Enter new name" name="name" ></input>
+						</div>
+					</div>
+					
+					
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2">College Name:</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control" id="col_name" value="<?php echo $row->collegename ?>" disabled></input>
+						</div>
+						<div class="col-sm-5">
+							<input type="text" class="form-control" id="col_name" name="colname" placeholder="Enter college name"></input>
+						</div>
+					</div>
+					
+					
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2">Semester:</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control" id="sem" value="<?php echo $row->semester ?>" disabled></input>
+						</div>
+						<div class="col-sm-5">
+							<input type="number" class="form-control" name="semester" id="sem" placeholder="Enter semester"></input>
+						</div>
+					</div>
+					
+					
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2">Pointer:</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control" id="point" value="<?php echo $row->pointer ?>" disabled></input>
+						</div>
+						<div class="col-sm-5">
+							<input type="text" class="form-control" id="point" name="pointer" placeholder="Enter pointer"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2">Rank:</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control" id="rank" value="<?php echo $row->rank ?>" disabled></input>
+						</div>
+						<div class="col-sm-5">
+							<input type="number" class="form-control" id="rank" name="rank" placeholder="Enter rank"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2">Academic Year:</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control" id="col_name" value="<?php echo $row->year ?>" disabled></input>
+						</div>
+						<div class="col-sm-5">
+							<input type="number" class="form-control" name="year"  id="col_name" placeholder="Enter academic year"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-7 col-sm-10">
+							<button type="submit" class="btn btn-primary" name="update">Update</button>
+							<button type="reset" class="btn btn-default">Reset</button>
+
+						</div>
+
+					</div>				
+				</form>
+			</div>
+
+			
+     
+	  		 <?php
+			
+			}
+			
+		   ?>
+
+
+			
+		</div>
+
+				
 		</div>	
 			
 
@@ -517,7 +672,7 @@
 
 	-->
 	</div>		
-	<script src="js/jquery-1.11.1.min.js"></script>
+	
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/chart.min.js"></script>
 	<script src="js/chart-data.js"></script>
@@ -525,17 +680,7 @@
 	<script src="js/easypiechart-data.js"></script>
 	<script src="js/bootstrap-datepicker.js"></script>
 	<script src="js/custom.js"></script>
-	<script>
-		window.onload = function () {
-	var chart1 = document.getElementById("line-chart").getContext("2d");
-	window.myLine = new Chart(chart1).Line(lineChartData, {
-	responsive: true,
-	scaleLineColor: "rgba(0,0,0,.2)",
-	scaleGridLineColor: "rgba(0,0,0,.05)",
-	scaleFontColor: "#c5c7cc"
-	});
-};
-	</script>
+	
 		
 </body>
 </html>

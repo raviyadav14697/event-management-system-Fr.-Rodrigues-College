@@ -1,3 +1,7 @@
+<?php
+  session_start();
+
+?>
 
 <!DOCTYPE html>
 <html>
@@ -12,7 +16,7 @@
   <link href="css/sb-admin.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
-    
+  <link rel="stylesheet" type="text/css" href="css/common.css">
   <script type="text/javascript" src="js/jquery.js"></script>
   <script type="text/javascript" src="js/council_index.js"></script>
     
@@ -34,7 +38,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span></button>
-        <a class="navbar-brand" href="#"><span>Lumino</span>Admin</a>
+        <a class="navbar-brand" href="#"><span>Event Management</span>System</a>
         <ul class="nav navbar-top-links navbar-right">
           <li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
             <em class="fa fa-envelope"></em><span class="label label-danger">15</span>
@@ -97,7 +101,7 @@
         <img src="http://placehold.it/50/30a5ff/fff" class="img-responsive" alt="">
       </div>
       <div class="profile-usertitle">
-        <div class="profile-usertitle-name">Username</div>
+        <div class="profile-usertitle-name"><?php echo $_SESSION['email']; ?></div>
         <div class="profile-usertitle-status"><span class="indicator label-success"></span>Online</div>
       </div>
       <div class="clear"></div>
@@ -133,7 +137,7 @@
         -->
       <li class="active"><a id="student_events" onclick="load(this.id)"><em class="fa fa-calendar">&nbsp;</em> Events </a></li>
       <li><a id="placements" onclick="load(this.id)"  ><em class="fa fa-calendar">&nbsp;</em> Placements</a></li>
-      <li><a id="update_profile" onclick="load(this.id)"  ><em class="fa fa-calendar">&nbsp;</em> Update Profile</a></li>
+      <li><a id="update_profile" href="spectrumcomplete/student_profile.php" ><em class="fa fa-calendar">&nbsp;</em> Update Profile</a></li>
       <li><a  href="logout.php"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
     </ul>
   </div><!--/.sidebar-->
@@ -159,44 +163,27 @@
                 $q1 = "Select * from pastevent";
                 $res = mysqli_query($con,$q1);
                 $no = mysqli_num_rows($res);  
-                $a = array();
-                $name = array();
-                $date = array();
+                $out = '<div class="row ravi">';
+                              
+                                    
                 while($row = $res->fetch_array())
                 {
-                    array_push($a,$row['path']);
-                    array_push($name,$row['name']);
-                    array_push($date,$row['date']);
+                    $out .= '<div class="card col-md-4" >';
+                    $out .= '<img class="card-img-top img-responsive" style="width: 300px; height: 300px;" src="'.$row['path'].'" alt="Card image cap"><div class="card-body"><h1 class="card-title">'.$row['name'].'</h1>
+                    <p class="card-text">'.$row['date'].'</p></div></div>';
                 }
                 //echo print_r($a);
+                $out .= '</div';
 
 
            ?>
     
-<div class="row ravi">
+<div class="row ravi" id="add_here">
 
-    <div class="card col-md-4" >
-      <img class="card-img-top img-responsive" style="width: 300px; height: 300px;" src="<?php echo $a[0] ?>" alt="Card image cap">
-      <div class="card-body">
-        <h1 class="card-title"><?php echo $name[0]; ?></h1>
-        <p class="card-text"><?php echo $date[0]; ?></p>
-        
-      </div>
-    </div>
-
-    <div class="card col-md-4">
-      <img class="card-img-top img-responsive" style="width: 300px; height: 300px;" src="<?php echo $a[1] ?>" alt="Card image cap">
-      <div class="card-body">
-        <h1 class="card-title"><?php echo $name[1]; ?></h1>
-        <p class="card-text"><?php echo $date[1]; ?></p>
-      </div>
-    </div>
-
-    
-
-
+    <?php echo $out; ?>
 
 </div>
+
 
 
       
@@ -560,7 +547,7 @@
 
   -->
   </div>    
-  <script src="js/jquery-1.11.1.min.js"></script>
+  
   <script src="js/bootstrap.min.js"></script>
   <script src="js/chart.min.js"></script>
   <script src="js/chart-data.js"></script>
@@ -568,17 +555,6 @@
   <script src="js/easypiechart-data.js"></script>
   <script src="js/bootstrap-datepicker.js"></script>
   <script src="js/custom.js"></script>
-  <script>
-    window.onload = function () {
-  var chart1 = document.getElementById("line-chart").getContext("2d");
-  window.myLine = new Chart(chart1).Line(lineChartData, {
-  responsive: true,
-  scaleLineColor: "rgba(0,0,0,.2)",
-  scaleGridLineColor: "rgba(0,0,0,.05)",
-  scaleFontColor: "#c5c7cc"
-  });
-};
-  </script>
     
 </body>
 </html>
